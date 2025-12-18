@@ -39,4 +39,4 @@ jobs:
     - name: Check JSON file
       run: |
         cd backend
-        python -c "import json; data = json.load(open('app/quotes.json')); print(f'Loaded {len(data)} quotes')"
+        python -c "import json; json.load(open('app/quotes.json', encoding='utf-8-sig'))"
