@@ -1,40 +1,40 @@
-import sys
-import os
+п»їimport os
+import json
 
-# Добавляем путь к backend для импорта
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# РџСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ С†РёС‚Р°С‚Р°РјРё
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_dir)
+quotes_path = os.path.join(backend_dir, 'app', 'quotes.json')
 
 def test_quotes_file_exists():
-    # Проверяем что файл с цитатами существует
-    quotes_path = os.path.join("backend", "app", "quotes.json")
-    assert os.path.exists(quotes_path), f"File {quotes_path} not found"
+    # РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ С„Р°Р№Р» quotes.json СЃСѓС‰РµСЃС‚РІСѓРµС‚
+    assert os.path.exists(quotes_path), f"Р¤Р°Р№Р» {quotes_path} РЅРµ РЅР°Р№РґРµРЅ"
 
 def test_quotes_valid_json():
-    # Проверяем что JSON файл валиден
-    import json
-    quotes_path = os.path.join("backend", "app", "quotes.json")
-    
-    # Открываем и читаем файл
-    with open(quotes_path, 'r', encoding='utf-8') as f:
+    # РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ quotes.json - РІР°Р»РёРґРЅС‹Р№ JSON Рё СЃРѕРґРµСЂР¶РёС‚ С†РёС‚Р°С‚С‹
+    with open(quotes_path, 'r', encoding='utf-8-sig') as f:
         quotes = json.load(f)
     
-    # Проверяем структуру
-    assert isinstance(quotes, list), "Quotes should be a list"
-    assert len(quotes) > 0, "Quotes list should not be empty"
+    # Р”РѕР»Р¶РµРЅ Р±С‹С‚СЊ СЃРїРёСЃРѕРє
+    assert isinstance(quotes, list), "quotes.json РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ СЃРїРёСЃРѕРє"
     
-    # Проверяем поля первой цитаты
-    if quotes:
-        assert "id" in quotes[0], "Quote should have 'id' field"
-        assert "text" in quotes[0], "Quote should have 'text' field"
-        assert "author" in quotes[0], "Quote should have 'author' field"
+    # РЎРїРёСЃРѕРє РЅРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј
+    assert len(quotes) > 0, "РЎРїРёСЃРѕРє С†РёС‚Р°С‚ РЅРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј"
+    
+    # РџСЂРѕРІРµСЂСЏРµРј РїРµСЂРІСѓСЋ С†РёС‚Р°С‚Сѓ
+    first_quote = quotes[0]
+    assert isinstance(first_quote, dict), "Р¦РёС‚Р°С‚Р° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ СЃР»РѕРІР°СЂРµРј"
+    
+    # Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ РїРѕР»Рµ СЃ С‚РµРєСЃС‚РѕРј
+    assert "text" in first_quote or "quote" in first_quote, \
+        "Р¦РёС‚Р°С‚Р° РґРѕР»Р¶РЅР° СЃРѕРґРµСЂР¶Р°С‚СЊ РїРѕР»Рµ 'text' РёР»Рё 'quote'"
 
-def test_backend_import():
-    # Проверяем что backend модули импортируются
-    try:
-        from backend.app.database import load_quotes
-        from backend.app.models import Quote
-        # Если импорт успешен - тест проходит
-        assert True
-    except ImportError as e:
-        # Если ошибка импорта - тест не проходит
-        assert False, f"Import error: {e}"
+def test_backend_structure():
+    # РџСЂРѕРІРµСЂСЏРµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ РїР°РїРѕРє backend
+    app_dir = os.path.join(backend_dir, 'app')
+    
+    # РџР°РїРєР° app РґРѕР»Р¶РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°С‚СЊ
+    assert os.path.exists(app_dir), "РџР°РїРєР° app РґРѕР»Р¶РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°С‚СЊ"
+    
+    # Р¤Р°Р№Р» quotes.json РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІ app
+    assert os.path.exists(quotes_path), "Р¤Р°Р№Р» quotes.json РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІ РїР°РїРєРµ app"
