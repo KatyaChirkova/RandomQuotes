@@ -21,7 +21,37 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="backend\app\database.py" />
+    <Compile Include="backend\app\main.py" />
+    <Compile Include="backend\app\models.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="backend\app\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="backend\tests\test_api.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="backend\tests\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RandomQuotes.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".github\workflows\" />
+    <Folder Include="backend\" />
+    <Folder Include="backend\app\" />
+    <Folder Include="backend\tests\" />
+    <Folder Include="frontend\" />
+    <Folder Include=".github\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".github\workflows\ci.yml" />
+    <Content Include=".gitignore" />
+    <Content Include="backend\app\quotes.json" />
+    <Content Include="backend\requirements.txt" />
+    <Content Include="frontend\purple.html" />
+    <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
