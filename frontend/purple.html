@@ -117,7 +117,7 @@
         </div>
 
         <!-- Основная кнопка для получения новой цитаты -->
-        <button id="get-quote-btn">😊 Новая цитата</button>
+        <button id="get-quote-btn">Новая цитата</button>
 
         <!-- Индикатор загрузки (скрыт по умолчанию) -->
         <div id="loading" class="loading hidden">📞 Загрузка...</div>
@@ -148,7 +148,7 @@
                 quoteText.textContent = '';
                 quoteAuthor.textContent = '';
                 // 3. Отправить запрос к API бэкенда
-                const response = await fetch('http://localhost:8800/random-quote');
+                const response = await fetch('http://localhost:8000/random-quote');
                 // 4. Получить цитату в формате JSON
                 const quote = await response.json();
                 // 5. Отобразить полученную цитату на странице
