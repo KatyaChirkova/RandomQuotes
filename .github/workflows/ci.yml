@@ -1,0 +1,42 @@
+name: Python CI
+# Запускаем при push и pull request
+on: [push, pull_request]
+
+jobs:
+  test:
+    # Используем последнюю Ubuntu
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Шаг 1: Получаем код
+    - uses: actions/checkout@v3
+    
+    # Шаг 2: Устанавливаем Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    # Шаг 3: Устанавливаем зависимости
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install -r requirements.txt
+    
+    # Шаг 4: Запускаем тесты
+    - name: Run tests
+      run: |
+        cd backend
+        python -m pytest tests/ -v
+    
+    # Шаг 5: Проверяем импорты
+    - name: Check imports
+      run: |
+        cd backend
+        python -c "from app.database import load_quotes; print('Import successful')"
+    
+    # Шаг 6: Проверяем JSON файл
+    - name: Check JSON file
+      run: |
+        cd backend
+        python -c "import json; data = json.load(open('app/quotes.json')); print(f'Loaded {len(data)} quotes')"
